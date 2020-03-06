@@ -20,13 +20,13 @@ public class Warrior extends Hero
 		if (Math.random() <= .4)
 		{
 			int blowPoints = ((int) (Math.random() * 76) + 100) * -1;
-			controller.updateView(opponent, "WHAM!");
+			getController().updateView(opponent, "WHAM!");
 			TimeUnit.SECONDS.sleep(1);
 			opponent.modifyHitPoints(blowPoints);
 		}
 		else
 		{
-			controller.updateView(opponent, "Miss!");
+			getController().updateView(opponent, "Miss!");
 		}
 	}
 }

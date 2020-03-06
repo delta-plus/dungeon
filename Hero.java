@@ -31,7 +31,10 @@ public abstract class Hero extends DungeonCharacter
 	public void readName()
 	{
 		System.out.print("Enter character name: ");
-		name = new Scanner(System.in).next();
+		
+		
+		setName(new Scanner(System.in).next());
+		
 	}
 
 	public boolean defend()
@@ -45,7 +48,7 @@ public abstract class Hero extends DungeonCharacter
 		{
 			if (defend())
 			{
-				controller.updateView(this, "Block!");
+				getController().updateView(this, "Block!");
 			} else {
 				super.modifyHitPoints(hitPointChange);
 			}
@@ -63,7 +66,7 @@ public abstract class Hero extends DungeonCharacter
 
 	public void setTurns(Monster opponent)
 	{
-		int numTurns = attackSpeed/opponent.getAttackSpeed();
+		int numTurns = getAttackSpeed()/opponent.getAttackSpeed();
 
 		if (numTurns == 0)
 		{
@@ -103,8 +106,7 @@ public abstract class Hero extends DungeonCharacter
 
 		return 1;
 	}
-	public int getTurns()
-	{
-			return this.turns;
-	}	
+	
+	
+	
 }

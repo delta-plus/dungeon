@@ -33,7 +33,7 @@ public abstract class Monster extends DungeonCharacter
 		boolean canHeal;
 		int hitPointChange;
 
-		canHeal = (Math.random() <= chanceToHeal) && (hitPoints > 0);
+		canHeal = (Math.random() <= chanceToHeal) && (getHitPoints() > 0);
 
 		if (canHeal)
 		{

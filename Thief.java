@@ -21,13 +21,13 @@ public class Thief extends Hero
 		{
 			int Turns = super.getTurns()+1;
 			super.setTurns(Turns);
-			controller.updateView(this, "Surprise!");
+			getController().updateView(this, "Surprise!");
 			TimeUnit.SECONDS.sleep(1);
 			attack(opponent);
 		}
 		else if (surprise >= .9)
 		{
-			controller.updateView(opponent, "Block!");
+			getController().updateView(opponent, "Block!");
 		}
 		else
 		{

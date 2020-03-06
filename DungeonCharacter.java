@@ -107,4 +107,14 @@ public abstract class DungeonCharacter
                         TimeUnit.SECONDS.sleep(1);
 		}
 	}
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+	public ViewController getController()
+	{
+		return this.controller;
+		
+	}
+	
 }
