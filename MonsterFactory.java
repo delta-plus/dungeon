@@ -1,5 +1,9 @@
+package dungeon;
+
 import java.util.Random;
-public class MonsterFactory {
+
+public class MonsterFactory 
+{
 
 	
 	
