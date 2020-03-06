@@ -23,7 +23,7 @@ public class MonsterFactory
 			}
 	
 	
-		public static Monster createRandomMonster(ViewController controller)
+		public static Monster createRandomMonster(ViewController controller) throws Exception 
 		{
 			Random random = new Random();
 			int ran = random.nextInt(3);
