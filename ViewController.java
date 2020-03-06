@@ -44,19 +44,8 @@ public class ViewController
 		}
 	}
 
-	public void createView() throws Exception 
+        public void drawScene()
 	{
-		try {
-			setSprites();
-		} catch (FileNotFoundException e) {
-			System.out.println("Error loading sprite: " + e);
-		}
-
-		clearScreen();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-
 		int heightDifference = heightDiff;
 
 		while (heroSprite.hasNextLine() && monsterSprite.hasNextLine()) 
@@ -96,6 +85,22 @@ public class ViewController
 		System.out.println();
 	}
 
+	public void createView()
+	{
+		try {
+			setSprites();
+		} catch (FileNotFoundException e) {
+			System.out.println("Error loading sprite: " + e);
+		}
+
+		clearScreen();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+
+		drawScene();
+	}
+
 	public void updateView(DungeonCharacter updatedCharacter, String action) 
 	{
 		if (updatedCharacter == hero) 
@@ -108,7 +113,7 @@ public class ViewController
 		}
 	}
 
-	public void updateView(DungeonCharacter updatedCharacter, int hitPointChange) throws Exception 
+	public void updateView(DungeonCharacter updatedCharacter, int hitPointChange)
 	{
 		if (updatedCharacter == hero) 
 		{
@@ -133,41 +138,7 @@ public class ViewController
 		System.out.println(" " + action);
 		System.out.println();
 
-		int heightDifference = heightDiff;
-
-		while (heroSprite.hasNextLine() && monsterSprite.hasNextLine()) 
-		{
-			if (heightDifference > 0) 
-			{
-				if (heroTaller) 
-				{
-					System.out.println(heroSprite.nextLine());
-				} else {
-					System.out.println("            " + monsterSprite.nextLine());
-				}
-
-				heightDifference--;
-			} 
-			else 
-			{
-				String line = heroSprite.nextLine() + "        " + monsterSprite.nextLine();
-				System.out.println(line);
-			}
-		}
-
-		System.out.println("----------------");
-		System.out.println(hero.getName() + "      " + monster.getName());
-		System.out.println("HP: " + hero.getHitPoints() + "      " + "HP: " + monster.getHitPoints());
-		System.out.println("Turns: " + hero.getTurns());
-		System.out.println();
-
-		for (String choice : hero.getActionList()) 
-		{
-			System.out.println(choice);
-		}
-
-		System.out.println(Integer.toString(hero.getActionList().length + 1) + ". Quit");
-		System.out.println();
+		drawScene();
 	}
 
 	private void drawHero(int hitPointChange) 
@@ -183,43 +154,7 @@ public class ViewController
 		System.out.println(" " + Integer.toString(hitPointChange));
 		System.out.println();
 
-		int heightDifference = heightDiff;
-
-		while (heroSprite.hasNextLine() && monsterSprite.hasNextLine()) 
-		{
-			if (heightDifference > 0) 
-			{
-				if (heroTaller) 
-				{
-					System.out.println(heroSprite.nextLine());
-				} 
-				else 
-				{
-					System.out.println("            " + monsterSprite.nextLine());
-				}
-
-				heightDifference--;
-			} 
-			else 
-			{
-				String line = heroSprite.nextLine() + "        " + monsterSprite.nextLine();
-				System.out.println(line);
-			}
-		}
-
-		System.out.println("----------------");
-		System.out.println(hero.getName() + "      " + monster.getName());
-		System.out.println("HP: " + hero.getHitPoints() + "      " + "HP: " + monster.getHitPoints());
-		System.out.println("Turns: " + hero.getTurns());
-		System.out.println();
-
-		for (String choice : hero.getActionList()) 
-		{
-			System.out.println(choice);
-		}
-
-		System.out.println(Integer.toString(hero.getActionList().length + 1) + ". Quit");
-		System.out.println();
+		drawScene();
 	}
 
 	private void drawMonster(String action) 
@@ -242,46 +177,10 @@ public class ViewController
 		System.out.println(buffer + action + " ");
 		System.out.println();
 
-		int heightDifference = heightDiff;
-
-		while (heroSprite.hasNextLine() && monsterSprite.hasNextLine()) 
-		{
-			if (heightDifference > 0) 
-			{
-				if (heroTaller) 
-				{
-					System.out.println(heroSprite.nextLine());
-				} 
-				else 
-				{
-					System.out.println("            " + monsterSprite.nextLine());
-				}
-
-				heightDifference--;
-			} 
-			else 
-			{
-				String line = heroSprite.nextLine() + "        " + monsterSprite.nextLine();
-				System.out.println(line);
-			}
-		}
-
-		System.out.println("----------------");
-		System.out.println(hero.getName() + "      " + monster.getName());
-		System.out.println("HP: " + hero.getHitPoints() + "      " + "HP: " + monster.getHitPoints());
-		System.out.println("Turns: " + hero.getTurns());
-		System.out.println();
-
-		for (String choice : hero.getActionList()) 
-		{
-			System.out.println(choice);
-		}
-
-		System.out.println(Integer.toString(hero.getActionList().length + 1) + ". Quit");
-		System.out.println();
+		drawScene();
 	}
 
-	private void drawMonster(int hitPointChange) throws Exception 
+	private void drawMonster(int hitPointChange)
 	{
 		String buffer = "";
 
@@ -301,43 +200,7 @@ public class ViewController
 		System.out.println(buffer + Integer.toString(hitPointChange) + " ");
 		System.out.println();
 
-		int heightDifference = heightDiff;
-
-		while (heroSprite.hasNextLine() && monsterSprite.hasNextLine()) 
-		{
-			if (heightDifference > 0) 
-			{
-				if (heroTaller) 
-				{
-					System.out.println(heroSprite.nextLine());
-				} 
-				else 
-				{
-					System.out.println("            " + monsterSprite.nextLine());
-				}
-
-				heightDifference--;
-			} 
-			else 
-			{
-				String line = heroSprite.nextLine() + "        " + monsterSprite.nextLine();
-				System.out.println(line);
-			}
-		}
-
-		System.out.println("----------------");
-		System.out.println(hero.getName() + "      " + monster.getName());
-		System.out.println("HP: " + hero.getHitPoints() + "      " + "HP: " + monster.getHitPoints());
-		System.out.println("Turns: " + hero.getTurns());
-		System.out.println();
-
-		for (String choice : hero.getActionList()) 
-		{
-			System.out.println(choice);
-		}
-
-		System.out.println(Integer.toString(hero.getActionList().length + 1) + ". Quit");
-		System.out.println();
+		drawScene();
 	}
 
 	public void clearScreen() {
