@@ -1,8 +1,9 @@
-import java.util.Random;
-public class MonsterFactory {
+package dungeon;
 
-	
-	
+import java.util.Random;
+
+public class MonsterFactory 
+{
 	public static Monster createMonster(ViewController controller, int choice) 
 			throws Exception  
 			{
