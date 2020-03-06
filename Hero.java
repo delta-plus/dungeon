@@ -1,6 +1,7 @@
 package dungeon;
 
 import java.io.File;
+import java.util.Scanner;
 
 public abstract class Hero extends DungeonCharacter
 {
@@ -30,7 +31,7 @@ public abstract class Hero extends DungeonCharacter
 	public void readName()
 	{
 		System.out.print("Enter character name: ");
-		name = Keyboard.readString();
+		name = new Scanner(System.in).next();
 	}
 
 	public boolean defend()
@@ -81,7 +82,7 @@ public abstract class Hero extends DungeonCharacter
 	{
 		turns--;
 
-		String actionChoice = Integer.toString(Keyboard.readInt());
+		String actionChoice = Integer.toString(new Scanner(System.in).nextInt());
 
 		for (String choice : actionList) 
 		{

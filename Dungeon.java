@@ -1,5 +1,6 @@
 package dungeon;
 
+import java.util.Scanner;
 import java.lang.reflect.*;
 import java.util.concurrent.TimeUnit;
 
@@ -25,13 +26,12 @@ public class Dungeon
 	throws Exception  
 	{
 		int choice;
-		Hero theHero;
 
 		System.out.println("Choose a hero:\n" +
 				   "1. Warrior\n" +
 				   "2. Sorceress\n" +
 				   "3. Thief");
-		choice = Keyboard.readInt();
+		choice = new Scanner(System.in).nextInt();
 		return new HeroFactory().makeHero(choice, controller);
 	}
 
@@ -59,11 +59,11 @@ public class Dungeon
 	{
 		controller.clearScreen();
 
-		char again;
-
 		System.out.println("Play again (y/n)?");
 
-		again = Keyboard.readChar();
+		String answer = new Scanner(System.in).next();
+		char ch[] = answer.toCharArray();
+		char again = ch[0];
 
 		return (again == 'Y' || again == 'y');
 	}
@@ -140,6 +140,7 @@ public class Dungeon
 				else 
 				{
 	                        	doAction(theHero, theMonster, choice);
+					TimeUnit.SECONDS.sleep(1);
 					controller.createView();
 				}
 			}
