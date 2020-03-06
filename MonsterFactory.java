@@ -1,9 +1,8 @@
-package dungeon;
-
 import java.util.Random;
+public class MonsterFactory {
 
-public class MonsterFactory 
-{
+	
+	
 	public static Monster createMonster(ViewController controller, int choice) 
 			throws Exception  
 			{
@@ -23,7 +22,7 @@ public class MonsterFactory
 			}
 	
 	
-		public static Monster createRandomMonster(ViewController controller) throws Exception 
+		public static Monster createRandomMonster(ViewController controller)
 		{
 			Random random = new Random();
 			int ran = random.nextInt(3);

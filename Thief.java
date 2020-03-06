@@ -19,7 +19,8 @@ public class Thief extends Hero
 		double surprise = Math.random();
 		if (surprise <= .4)
 		{
-			turns++;
+			int Turns = super.getTurns()+1;
+			super.setTurns(Turns);
 			controller.updateView(this, "Surprise!");
 			TimeUnit.SECONDS.sleep(1);
 			attack(opponent);

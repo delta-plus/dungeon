@@ -5,9 +5,9 @@ import java.util.Scanner;
 
 public abstract class Hero extends DungeonCharacter
 {
-	protected double chanceToBlock;
-	protected String[] actionList;
-	protected int turns;
+	private double chanceToBlock;
+	private String[] actionList;
+	private int turns;
 
 	public Hero(String name, 
                     int hitPoints, 
@@ -72,6 +72,10 @@ public abstract class Hero extends DungeonCharacter
 
 		turns = numTurns;
 	}
+	public void setTurns(int Change)
+	{
+		this.turns = Change;
+	}
 
 	public int getTurns()
 	{
@@ -99,4 +103,8 @@ public abstract class Hero extends DungeonCharacter
 
 		return 1;
 	}
+	public int getTurns()
+	{
+			return this.turns;
+	}	
 }

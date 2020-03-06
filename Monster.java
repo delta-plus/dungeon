@@ -5,8 +5,8 @@ import java.util.concurrent.TimeUnit;
 
 public abstract class Monster extends DungeonCharacter
 {
-	protected double chanceToHeal;
-	protected int minHeal, maxHeal;
+	private double chanceToHeal;
+	private int minHeal, maxHeal;
 
 	public Monster(String name, 
 		       int hitPoints, 
