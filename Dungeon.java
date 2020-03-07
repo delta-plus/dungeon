@@ -32,7 +32,7 @@ public class Dungeon
 				   "2. Sorceress\n" +
 				   "3. Thief");
 		choice = new Scanner(System.in).nextInt();
-		return new HeroFactory().makeHero(choice, controller);
+		return new HeroFactory().createHero(choice, controller);
 	}
 
 	public static Monster generateMonster(ViewController controller) 

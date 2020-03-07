@@ -2,7 +2,7 @@ package dungeon;
 
 public class HeroFactory 
 {
-    public Hero makeHero(int choice, ViewController controller) 
+    public Hero createHero(int choice, ViewController controller) 
     {
         if (choice == 1) 
         {
