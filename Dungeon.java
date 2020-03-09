@@ -6,18 +6,19 @@ import java.util.concurrent.TimeUnit;
 
 public class Dungeon
 {
-	public static void main(String[] args) 
-	throws Exception 
-	{
-		Hero theHero;
-		Monster theMonster;
-		ViewController controller = new ViewController();
+	private static Hero theHero = null;
+	private static Monster theMonster = null;
+	private static ViewController controller = new ViewController();
 
+	public Dungeon() {}
+
+	public void play() throws Exception 
+	{
 		do
 		{
 			theHero = chooseHero(controller);
 			theMonster = generateMonster(controller);
-			battle(controller, theHero, theMonster);
+			battle();
 		} while (playAgain(controller));
 
 	}
@@ -68,7 +69,7 @@ public class Dungeon
 		return (again == 'Y' || again == 'y');
 	}
 
-	private static void doAction(Hero theHero, Monster theMonster, int choice) 
+	private static void doAction(int choice) 
 	throws Exception  
 	{
 		choice--;
@@ -112,7 +113,7 @@ public class Dungeon
 		}
 	}
 
-	public static void battle(ViewController controller, Hero theHero, Monster theMonster)
+	public static void battle()
 	throws Exception 
 	{
                 int quitChoice = theHero.getActionList().length + 1;
@@ -139,7 +140,7 @@ public class Dungeon
                         	} 
 				else 
 				{
-	                        	doAction(theHero, theMonster, choice);
+	                        	doAction(choice);
 					controller.createView();
 				}
 			}
@@ -166,5 +167,11 @@ public class Dungeon
 
 		TimeUnit.SECONDS.sleep(1);
 		TimeUnit.SECONDS.sleep(1);
+	}
+
+	public static void main(String[] args) throws Exception
+	{
+		Dungeon game = new Dungeon();
+		game.play();
 	}
 }
