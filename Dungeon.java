@@ -16,14 +16,14 @@ public class Dungeon
 	{
 		do
 		{
-			theHero = chooseHero(controller);
-			theMonster = generateMonster(controller);
+			theHero = chooseHero();
+			theMonster = generateMonster();
 			battle();
-		} while (playAgain(controller));
+		} while (playAgain());
 
 	}
 
-	public static Hero chooseHero(ViewController controller) 
+	public static Hero chooseHero() 
 	throws Exception  
 	{
 		int choice;
@@ -36,7 +36,7 @@ public class Dungeon
 		return new HeroFactory().createHero(choice, controller);
 	}
 
-	public static Monster generateMonster(ViewController controller) 
+	public static Monster generateMonster() 
 	throws Exception  
 	{
 		int choice;
@@ -56,7 +56,7 @@ public class Dungeon
 		}
 	}
 
-	public static boolean playAgain(ViewController controller)
+	public static boolean playAgain()
 	{
 		controller.clearScreen();
 
