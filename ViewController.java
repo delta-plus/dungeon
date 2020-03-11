@@ -2,108 +2,162 @@ package dungeon;
 
 import java.util.Scanner;
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.util.concurrent.TimeUnit;
 
 public class ViewController 
 {
-	private Hero hero;
-	private Monster monster;
-	private Scanner heroSprite;
-	private Scanner monsterSprite;
-	private int heightDiff;
-	private boolean heroTaller;
+	private Hero theHero;
+	private Room theRoom;
 
 	public ViewController() {}
 
-	public void setHero(Hero theHero) 
+	public void setHero(Hero theHero)
 	{
-		hero = theHero;
+		this.theHero = theHero;
 	}
 
-	public void setMonster(Monster theMonster) 
+	public void setRoom(Room theRoom)
 	{
-		monster = theMonster;
+		this.theRoom = theRoom;
 	}
 
-	// Initializes (or resets) sprite Scanners
-	public void setSprites() throws FileNotFoundException 
+	public void drawLowerScene()
 	{
-		try {
-			heroSprite = new Scanner(hero.getSprite());
-			monsterSprite = new Scanner(monster.getSprite());
+		boolean hasPit = false;
+		Scanner pitSprite = null;
+		boolean hasMonster = false;
+		Monster theMonster = null;
 
-		        if (hero.getHeight() >= monster.getHeight()) {
-		    		heightDiff = hero.getHeight() - monster.getHeight();
-		      		heroTaller = true;
-		    	} else {
-		      		heightDiff = monster.getHeight() - hero.getHeight();
-		     		heroTaller = false;
-		    	}
-		} catch (FileNotFoundException e) {
-			System.out.println("Error loading sprite: " + e);
+		if (theRoom.getGraphic("Pit") != null)
+		{
+			hasPit = true;
+			pitSprite = theRoom.getGraphic("Pit").getSprite();
+		}
+
+		if (theRoom.getMonster() != null)
+		{
+			hasMonster = true;
+			theMonster = theRoom.getMonster();
+		}
+
+		if (hasMonster && hasPit)
+		{
+			System.out.println("-    ------------------------------------------");
+			System.out.println(pitSprite.nextLine() + " " + 
+					   theHero.getName() + 
+					   "                  " + 
+					   theMonster.getName());
+			System.out.println(pitSprite.nextLine() + " " + 
+					   "HP: " + theHero.getHitPoints() + 
+					   "                  " + 
+					   "HP: " + theMonster.getHitPoints());
+			System.out.println(pitSprite.nextLine() + " Turns: " + theHero.getTurns());
+			System.out.println(pitSprite.nextLine());
+			System.out.println(pitSprite.nextLine());
+			System.out.println();
+
+			for (String choice : theHero.getActionList()) 
+			{
+				System.out.println(choice);
+			}
+
+			System.out.println(Integer.toString(theHero.getActionList().length + 1) + ". Quit");
+			System.out.println();
+		}
+		else if (hasMonster && !hasPit)
+		{
+ 			System.out.println("-----------------------------------------------");
+			System.out.println("       " + 
+					   theHero.getName() + 
+					   "                  " + 
+					   theMonster.getName());
+			System.out.println("       " + 
+					   "HP: " + Integer.toString(theHero.getHitPoints()) + 
+					   "                  " + 
+					   "HP: " + Integer.toString(theMonster.getHitPoints()));
+			System.out.println("      Turns: " + theHero.getTurns());
+			System.out.println();
+
+			for (String choice : theHero.getActionList()) 
+			{
+				System.out.println(choice);
+			}
+
+			System.out.println(Integer.toString(theHero.getActionList().length + 1) + ". Quit");
+			System.out.println();
+		}
+		else if (!hasMonster && hasPit)
+		{
+			System.out.println("-    ------------------------------------------");
+			System.out.println(pitSprite.nextLine() + " " + 
+					   theHero.getName());
+			System.out.println(pitSprite.nextLine()+ " " + 
+					   "HP: " + Integer.toString(theHero.getHitPoints()));
+			System.out.println(pitSprite.nextLine());
+			System.out.println(pitSprite.nextLine());
+			System.out.println(pitSprite.nextLine());
+			System.out.println();
+		}
+		else
+		{
+ 			System.out.println("-----------------------------------------------");
+			System.out.println("       " + 
+					   theHero.getName());
+			System.out.println("       " + 
+					   "HP: " + Integer.toString(theHero.getHitPoints()));
+			System.out.println();
+			System.out.println();
+			System.out.println();
 		}
 	}
 
-	public void drawScene()
+	public void drawUpperScene() throws Exception
 	{
-		int heightDifference = heightDiff;
+		String line;
 
-		while (heroSprite.hasNextLine() && monsterSprite.hasNextLine()) 
+		for (int linesDrawn = 0; linesDrawn < 10; linesDrawn++)
 		{
-			if (heightDifference > 0) 
+			line = "";
+
+			for (Drawable graphic : theRoom.getGraphics())
 			{
-				if (heroTaller) 
+				if (graphic.getHeight() < 10 - linesDrawn)
 				{
-					System.out.println(heroSprite.nextLine());
+					line += "      ";
 				} 
 				else 
 				{
-					System.out.println("            " + monsterSprite.nextLine());
+					line += graphic.getSprite().nextLine();
 				}
-
-				heightDifference--;
-			} 
-			else 
-			{
-				String line = heroSprite.nextLine() + "        " + monsterSprite.nextLine();
-				System.out.println(line);
 			}
+
+			System.out.println(line);
 		}
-
-		System.out.println("----------------");
-		System.out.println(hero.getName() + "      " + monster.getName());
-		System.out.println("HP: " + hero.getHitPoints() + "      " + "HP: " + monster.getHitPoints());
-		System.out.println("Turns: " + hero.getTurns());
-		System.out.println();
-
-		for (String choice : hero.getActionList()) 
-		{
-			System.out.println(choice);
-		}
-
-		System.out.println(Integer.toString(hero.getActionList().length + 1) + ". Quit");
-		System.out.println();
 	}
 
-	public void createView() throws Exception 
+	public void drawScene() throws Exception
 	{
-		try {
-			setSprites();
-		} catch (FileNotFoundException e) {
-			System.out.println("Error loading sprite: " + e);
-		}
+		drawUpperScene();
+		drawLowerScene();
 
+		for (Drawable graphic : theRoom.getGraphics())
+		{
+			graphic.refreshSprite();
+		}
+	}
+
+	public void createView() throws Exception
+	{
 		clearScreen();
-		System.out.println();
 		System.out.println();
 		System.out.println();
 
 		drawScene();
 	}
 
-	public void updateView(DungeonCharacter updatedCharacter, String action) 
+	public void updateView(DungeonCharacter updatedCharacter, String action) throws Exception
 	{
-		if (updatedCharacter == hero) 
+		if (updatedCharacter == theHero) 
 		{
 			drawHero(action);
 		} 
@@ -113,9 +167,9 @@ public class ViewController
 		}
 	}
 
-	public void updateView(DungeonCharacter updatedCharacter, int hitPointChange) throws Exception 
+	public void updateView(DungeonCharacter updatedCharacter, int hitPointChange) throws Exception
 	{
-		if (updatedCharacter == hero) 
+		if (updatedCharacter == theHero) 
 		{
 			drawHero(hitPointChange);
 		} 
@@ -125,57 +179,36 @@ public class ViewController
 		}
 	}
 
-	private void drawHero(String action) 
+	private void drawHero(String action) throws Exception
 	{
-		try {
-			setSprites();
-		} catch (FileNotFoundException e) {
-			System.out.println("Error loading sprite: " + e);
-		}
-
 		clearScreen();
 		System.out.println();
-		System.out.println(" " + action);
-		System.out.println();
+		System.out.println("        " + action);
 
 		drawScene();
 	}
 
-	private void drawHero(int hitPointChange) 
+	private void drawHero(int hitPointChange) throws Exception
 	{
-		try {
-			setSprites();
-		} catch (FileNotFoundException e) {
-			System.out.println("Error loading sprite: " + e);
-		}
-
 		clearScreen();
 		System.out.println();
-		System.out.println(" " + Integer.toString(hitPointChange));
-		System.out.println();
+		System.out.println("        " + Integer.toString(hitPointChange));
 
 		drawScene();
 	}
 
-	private void drawMonster(String action) 
+	private void drawMonster(String action) throws Exception
 	{
 		String buffer = "";
 
-		for (int i = 16 - (action.length() + 1); i > 0; i--) 
+		for (int i = 30 - (action.length() + 1); i > 0; i--) 
 		{
 			buffer += " ";
-		}
-
-		try {
-			setSprites();
-		} catch (FileNotFoundException e) {
-			System.out.println("Error loading sprite: " + e);
 		}
 
 		clearScreen();
 		System.out.println();
 		System.out.println(buffer + action + " ");
-		System.out.println();
 
 		drawScene();
 	}
@@ -184,23 +217,38 @@ public class ViewController
 	{
 		String buffer = "";
 
-		for (int i = 16 - (Integer.toString(hitPointChange).length() + 1); i > 0; i--) 
+		for (int i = 30 - (Integer.toString(hitPointChange).length() + 1); i > 0; i--) 
 		{
 			buffer += " ";
-		}
-
-		try {
-			setSprites();
-		} catch (FileNotFoundException e) {
-			System.out.println("Error loading sprite: " + e);
 		}
 
 		clearScreen();
 		System.out.println();
 		System.out.println(buffer + Integer.toString(hitPointChange) + " ");
-		System.out.println();
 
 		drawScene();
+	}
+
+	public void eraseMonster() throws Exception
+	{
+		Drawable tempMonster = theRoom.getGraphic("Monster");
+		theRoom.removeMonster();
+		theRoom.replaceGraphic(5, new EmptySpace());
+		createView();
+		TimeUnit.MILLISECONDS.sleep(250);
+		tempMonster.refreshSprite();
+		theRoom.replaceGraphic(5, tempMonster);
+		createView();
+		TimeUnit.MILLISECONDS.sleep(250);
+		theRoom.replaceGraphic(5, new EmptySpace());
+		createView();
+		TimeUnit.MILLISECONDS.sleep(250);
+		tempMonster.refreshSprite();
+		theRoom.replaceGraphic(5, tempMonster);
+		createView();
+		TimeUnit.MILLISECONDS.sleep(250);
+		theRoom.replaceGraphic(5, new EmptySpace());
+		createView();
 	}
 
 	public void clearScreen() {

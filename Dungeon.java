@@ -1,6 +1,7 @@
 package dungeon;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 import java.lang.reflect.*;
 import java.util.concurrent.TimeUnit;
 
@@ -8,23 +9,95 @@ public class Dungeon
 {
 	private static Hero theHero = null;
 	private static Monster theMonster = null;
+	private static Room[][] dungeon = new Room[5][5];
+	private static Room theRoom = null;
+	private static int[] pillarRoomRows = new int[4];
+	private static int[] pillarRoomColumns = new int[4];
+	private static boolean hasPillar = false;
+	private static boolean playerWon = false;
+	private static boolean playerLost = false;
+	private static boolean playerQuit = false;
+	private static Scanner keyboard = new Scanner(System.in);
 	private static ViewController controller = new ViewController();
 
 	public Dungeon() {}
 
-	public void play() throws Exception 
+	public Room getRoom(int row, int column)
+	{
+		return dungeon[row][column];
+	}
+
+	public void play() throws Exception
 	{
 		do
 		{
 			theHero = chooseHero();
-			theMonster = generateMonster();
-			battle();
+			controller.setHero(theHero);
+
+			// Generate 4 unique Pillar locations
+			for (int i = 0; i < 4; i++)
+			{
+				pillarRoomRows[i] = (int) (Math.random() * 5);
+				pillarRoomColumns[i] = (int) (Math.random() * 5);
+
+				if (i > 0)
+				{
+					while (pillarRoomRows[i] == pillarRoomRows[i - 1] && 
+					       pillarRoomColumns[i] == pillarRoomColumns[i - 1])
+					{
+						pillarRoomRows[i] = (int) Math.random() * 5;
+						pillarRoomColumns[i] = (int) Math.random() * 5;
+					}
+				}
+			}
+
+			// Randomly generate all the rooms
+			for (int i = 0; i < 5; i++)
+			{
+				for (int j = 0; j < 5; j++)
+				{
+					for (int k = 0; k < 4; k++)
+					{
+						if (i == pillarRoomRows[k] && j == pillarRoomColumns[k])
+						{
+							hasPillar = true;
+						}
+					}
+
+					dungeon[i][j] = new Room(theHero, i, j, controller, hasPillar);
+					hasPillar = false;
+				}
+			}
+
+			theRoom = dungeon[0][0];
+
+			while (!playerWon && !playerLost && !playerQuit)
+			{
+				enterRoom();
+			}
+
+			controller.clearScreen();
+
+			if (playerWon)
+			{
+				playerWon = false;
+				System.out.println(theHero.getName() + " was victorious!");
+			}
+			else if (playerLost)
+			{
+				playerLost = false;
+				System.out.println(theHero.getName() + " was defeated!");
+			}
+			else
+			{
+				playerQuit = false;
+				System.out.println("Quitters never win.");
+			}
 		} while (playAgain());
 
 	}
 
-	public static Hero chooseHero() 
-	throws Exception  
+	public static Hero chooseHero() throws Exception  
 	{
 		int choice;
 
@@ -32,16 +105,16 @@ public class Dungeon
 				   "1. Warrior\n" +
 				   "2. Sorceress\n" +
 				   "3. Thief");
-		choice = new Scanner(System.in).nextInt();
+		choice = keyboard.nextInt();
+		keyboard.nextLine();
 		return new HeroFactory().createHero(choice, controller);
 	}
 
-	public static Monster generateMonster() 
-	throws Exception  
+	public static Monster generateMonster() throws Exception  
 	{
 		int choice;
 
-		choice = (int)(Math.random() * 3) + 1;
+		choice = (int) (Math.random() * 3) + 1;
 
 		switch(choice)
 		{
@@ -62,15 +135,15 @@ public class Dungeon
 
 		System.out.println("Play again (y/n)?");
 
-		String answer = new Scanner(System.in).next();
+		String answer = keyboard.next();
+		keyboard.nextLine();
 		char ch[] = answer.toCharArray();
 		char again = ch[0];
 
 		return (again == 'Y' || again == 'y');
 	}
 
-	private static void doAction(int choice) 
-	throws Exception  
+	private static void doAction(int choice) throws Exception  
 	{
 		choice--;
 
@@ -113,15 +186,11 @@ public class Dungeon
 		}
 	}
 
-	public static void battle()
-	throws Exception 
+	public static void battle() throws Exception 
 	{
                 int quitChoice = theHero.getActionList().length + 1;
 
 		theHero.setTurns(theMonster);
-		controller.setHero(theHero);
-		controller.setMonster(theMonster);
-		controller.setSprites();
 		controller.createView();
 
                 battle:
@@ -156,17 +225,136 @@ public class Dungeon
 			}
 		}
 
-		controller.clearScreen();
-
 		if (!theMonster.isAlive())
-			System.out.println(theHero.getName() + " was victorious!");
+		{
+			controller.eraseMonster();
+		} 
 		else if (!theHero.isAlive())
-			System.out.println(theHero.getName() + " was defeated!");
-		else //both are alive so user quit the game
-			System.out.println("Quitters never win.");
+		{
+			playerLost = true;
+		}
+		else
+		{
+			playerQuit = true;
+		}
+	}
 
-		TimeUnit.SECONDS.sleep(1);
-		TimeUnit.SECONDS.sleep(1);
+	public void loot() throws Exception
+	{
+		ArrayList<Item> items = theRoom.getItems();
+
+		for (int i = 0; i < items.size(); i++)
+		{
+			controller.updateView(theHero, "Found a " + items.get(i).getName() + "!");
+			TimeUnit.SECONDS.sleep(1);
+                        // This is when the item would go in the hero's inventory
+		}
+
+		for (int i = 0; i < items.size(); i++)
+		{
+			theRoom.removeItem(i);
+		}
+
+		if (theRoom.getGraphic("Pillar") != null && theRoom.pillarDiscovered() == false)
+		{
+			String pillarNumber = null;
+
+			if (theHero.getPillarCount() == 0)
+			{
+				pillarNumber = "first";
+			}
+			else if (theHero.getPillarCount() == 1)
+			{
+				pillarNumber = "second";
+			}
+			else if (theHero.getPillarCount() == 2)
+			{
+				pillarNumber = "third";
+			}
+			else
+			{
+				pillarNumber = "fourth and final";
+			}
+
+			theHero.addPillar();
+			theRoom.discoverPillar();
+			controller.updateView(theHero, "Found the " + pillarNumber + " pillar of OO!");
+			TimeUnit.SECONDS.sleep(1);
+		}
+
+		controller.createView();
+	}
+
+	public void navigate() throws Exception
+	{
+		Room currentRoom = theRoom;
+
+		while (theRoom == currentRoom)
+		{
+			char direction = (char) System.in.read();
+
+			if (direction == 'w' || direction == 'W')
+			{
+				if (theRoom.getRow() > 0)
+				{
+					theRoom = getRoom(theRoom.getRow() - 1, theRoom.getColumn());
+				}
+			}
+			else if (direction == 'a' || direction == 'A')
+			{
+				if (theRoom.getColumn() > 0)
+				{
+					theRoom = getRoom(theRoom.getRow(), theRoom.getColumn() - 1);
+				}
+			}
+			else if (direction == 's' || direction == 'S')
+			{
+				if (theRoom.getRow() < 4)
+				{
+					theRoom = getRoom(theRoom.getRow() + 1, theRoom.getColumn());
+				}
+			}
+			else if (direction == 'd' || direction == 'D')
+			{
+				if (theRoom.getColumn() < 4)
+				{
+					theRoom = getRoom(theRoom.getRow(), theRoom.getColumn() + 1);
+				}
+			}
+		}
+	}
+
+	public void enterRoom() throws Exception
+	{
+		controller.setRoom(theRoom);
+		controller.createView();
+
+		if (theRoom.getGraphic("Pit") != null)
+		{
+			controller.updateView(theHero, "These pits are the pits!");
+			TimeUnit.SECONDS.sleep(1);
+			theHero.modifyHitPoints(((int) (Math.random() * 20) + 1) * -1);
+			TimeUnit.SECONDS.sleep(1);
+			controller.createView();
+
+			if (!theHero.isAlive())
+			{
+				playerLost = true;
+				return;
+			}
+		}
+
+		if (theRoom.getMonster() != null)
+		{
+			theMonster = theRoom.getMonster();
+			battle();
+		}
+
+		if (!playerLost && !playerQuit)
+		{
+			loot();
+			navigate();
+		}
 	}
 
 	public static void main(String[] args) throws Exception

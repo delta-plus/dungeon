@@ -1,9 +1,10 @@
 package dungeon;
 
 import java.io.File;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-public abstract class DungeonCharacter
+public abstract class DungeonCharacter implements Drawable
 {
 	private String name;
 	private int hitPoints;
@@ -11,7 +12,9 @@ public abstract class DungeonCharacter
 	private double chanceToHit;
 	private int damageMin, damageMax;
         private int height;
-        private File sprite;
+	private String type;
+	private File spriteFile;
+        private Scanner sprite;
         private ViewController controller;
 
 	public DungeonCharacter(String name, 
@@ -21,9 +24,10 @@ public abstract class DungeonCharacter
                                 int damageMin, 
                                 int damageMax,
                                 int height,
-                                File sprite,
+				String type,
+                                File spriteFile,
                                 ViewController controller
-			       )
+			       ) throws Exception
 	{
 		this.name = name;
 		this.hitPoints = hitPoints;
@@ -32,7 +36,9 @@ public abstract class DungeonCharacter
 		this.damageMin = damageMin;
 		this.damageMax = damageMax;
 		this.height = height;
-		this.sprite = sprite;
+		this.type = type;
+		this.spriteFile = spriteFile;
+		this.sprite = new Scanner(spriteFile);
                 this.controller = controller;
 	}
 
@@ -56,9 +62,19 @@ public abstract class DungeonCharacter
 		return height;
 	}
 
-	public File getSprite() 
+	public String getType()
+	{
+		return type;
+	}
+
+	public Scanner getSprite() 
 	{
 		return sprite;
+	}
+
+	public void refreshSprite() throws Exception
+	{
+		sprite = new Scanner(spriteFile);
 	}
 
 	public void modifyHitPoints(int hitPointChange) throws Exception 

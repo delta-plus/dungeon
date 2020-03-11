@@ -20,9 +20,20 @@ public abstract class Monster extends DungeonCharacter
                        int height,
                        File sprite,
                        ViewController controller
-		      )
+		      ) throws Exception
 	{
-		super(name, hitPoints, attackSpeed, chanceToHit, damageMin, damageMax, height, sprite, controller);
+		super(name, 
+		      hitPoints, 
+		      attackSpeed, 
+		      chanceToHit, 
+		      damageMin, 
+		      damageMax, 
+		      height, 
+		      "Monster", 
+		      sprite, 
+		      controller
+		     );
+
 		this.chanceToHeal = chanceToHeal;
 		this.maxHeal = maxHeal;
 		this.minHeal = minHeal;

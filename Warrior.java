@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Warrior extends Hero
 {
-	public Warrior(ViewController controller) 
+	public Warrior(ViewController controller) throws Exception
 	{
 		super("Warrior", 125, 4, .8, 35, 60, .2, 4, 
 		      new File("sprites/WarriorSprite.txt"), 
@@ -27,6 +27,7 @@ public class Warrior extends Hero
 		else
 		{
 			getController().updateView(opponent, "Miss!");
+			TimeUnit.SECONDS.sleep(1);
 		}
 	}
 }

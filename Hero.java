@@ -7,6 +7,7 @@ public abstract class Hero extends DungeonCharacter
 {
 	private double chanceToBlock;
 	private String[] actionList;
+	private int pillarCount;
 	private int turns;
 
 	public Hero(String name, 
@@ -20,11 +21,12 @@ public abstract class Hero extends DungeonCharacter
 		    File sprite,
                     ViewController controller,
 		    String[] actionList
-                   )
+                   ) throws Exception
 	{
-		super(name, hitPoints, attackSpeed, chanceToHit, damageMin, damageMax, height, sprite, controller);
+		super(name, hitPoints, attackSpeed, chanceToHit, damageMin, damageMax, height, "Hero", sprite, controller);
 		this.chanceToBlock = chanceToBlock;
 		this.actionList = actionList;
+		pillarCount = 0;
 		readName();
 	}
 
@@ -85,6 +87,16 @@ public abstract class Hero extends DungeonCharacter
 		return turns;
 	}
 
+	public int getPillarCount()
+	{
+		return pillarCount;
+	}
+
+	public void addPillar()
+	{
+		pillarCount++;
+	}
+
 	public int chooseAction(Monster opponent)
 	{
 		turns--;
@@ -106,7 +118,4 @@ public abstract class Hero extends DungeonCharacter
 
 		return 1;
 	}
-	
-	
-	
 }

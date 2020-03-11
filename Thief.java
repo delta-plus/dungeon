@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Thief extends Hero
 {
-	public Thief(ViewController controller) 
+	public Thief(ViewController controller) throws Exception
 	{
 		super("Thief", 75, 6, .8, 20, 40, .5, 4, 
 		      new File("sprites/ThiefSprite.txt"), 

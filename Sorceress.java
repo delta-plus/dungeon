@@ -7,7 +7,7 @@ public class Sorceress extends Hero
 	private final int MIN_ADD = 25;
 	private final int MAX_ADD = 50;
 
-	public Sorceress(ViewController controller)
+	public Sorceress(ViewController controller) throws Exception
 	{
 		super("Sorceress", 75, 5, .7, 25, 50, .3, 5, 
 		      new File("sprites/SorceressSprite.txt"), 
