@@ -35,16 +35,41 @@ public class Dungeon
 			theHero = chooseHero();
 			controller.setHero(theHero);
 
+			// Generate a random entrance and exit location
+			int entranceRow = (int) (Math.random() * 5);
+			int entranceColumn = (int) (Math.random() * 5);
+
+			int exitRow = (int) (Math.random() * 5);
+			int exitColumn = (int) (Math.random() * 5);
+
+			while (exitRow == entranceRow && exitColumn == entranceColumn)
+			{
+				exitRow = (int) (Math.random() * 5);
+				exitColumn = (int) (Math.random() * 5);
+			}
+
 			// Generate 4 unique Pillar locations
 			for (int i = 0; i < 4; i++)
 			{
 				pillarRoomRows[i] = (int) (Math.random() * 5);
 				pillarRoomColumns[i] = (int) (Math.random() * 5);
 
+				while (pillarRoomRows[i] == entranceRow  && pillarRoomColumns[i] == entranceColumn || 
+				       pillarRoomRows[i] == exitRow && pillarRoomColumns[i] == exitColumn) 
+				{
+					pillarRoomRows[i] = (int) (Math.random() * 5);
+					pillarRoomColumns[i] = (int) (Math.random() * 5);
+				}
+
 				if (i > 0)
 				{
 					while (pillarRoomRows[i] == pillarRoomRows[i - 1] && 
-					       pillarRoomColumns[i] == pillarRoomColumns[i - 1])
+					       pillarRoomColumns[i] == pillarRoomColumns[i - 1] || 
+					       pillarRoomRows[i] == entranceRow && 
+					       pillarRoomColumns[i] == entranceColumn ||
+					       pillarRoomRows[i] == exitRow && 
+					       pillarRoomColumns[i] == exitColumn
+					      )
 					{
 						pillarRoomRows[i] = (int) Math.random() * 5;
 						pillarRoomColumns[i] = (int) Math.random() * 5;
@@ -57,20 +82,53 @@ public class Dungeon
 			{
 				for (int j = 0; j < 5; j++)
 				{
-					for (int k = 0; k < 4; k++)
+					if (i == entranceRow && j == entranceColumn)
 					{
-						if (i == pillarRoomRows[k] && j == pillarRoomColumns[k])
-						{
-							hasPillar = true;
-						}
+						dungeon[i][j] = new Room(theHero, 
+									 i, 
+									 j, 
+									 controller, 
+									 false, 
+									 true, 
+									 false, 
+									 attacks
+									);
 					}
+					else if (i == exitRow && j == exitColumn)
+					{
+						dungeon[i][j] = new Room(theHero, 
+									 i, 
+									 j, 
+									 controller, 
+									 false, 
+									 false, 
+									 true, 
+									 attacks
+									);
+					} else {
+						for (int k = 0; k < 4; k++)
+						{
+							if (i == pillarRoomRows[k] && j == pillarRoomColumns[k])
+							{
+								hasPillar = true;
+							}
+						}
 
-					dungeon[i][j] = new Room(theHero, i, j, controller, hasPillar, attacks);
-					hasPillar = false;
+						dungeon[i][j] = new Room(theHero, 
+									 i, 
+									 j, 
+									 controller, 
+									 hasPillar, 
+									 false,
+									 false,
+									 attacks
+									);
+						hasPillar = false;
+					}
 				}
 			}
 
-			theRoom = dungeon[0][0];
+			theRoom = dungeon[entranceRow][entranceColumn];
 
 			while (!playerWon && !playerLost && !playerQuit)
 			{
@@ -83,16 +141,17 @@ public class Dungeon
 			{
 				playerWon = false;
 				System.out.println(theHero.getName() + " was victorious!");
+				TimeUnit.SECONDS.sleep(2);
 			}
 			else if (playerLost)
 			{
 				playerLost = false;
 				System.out.println(theHero.getName() + " was defeated!");
+				TimeUnit.SECONDS.sleep(2);
 			}
 			else
 			{
 				playerQuit = false;
-				System.out.println("Quitters never win.");
 			}
 		} while (playAgain());
 
@@ -329,6 +388,36 @@ public class Dungeon
 	{
 		controller.setRoom(theRoom);
 		controller.createView();
+
+		if (theRoom.isExit())
+		{
+			controller.updateView(theHero, "This must be the exit!");
+			TimeUnit.SECONDS.sleep(2);
+			controller.createView();
+			TimeUnit.MILLISECONDS.sleep(500);
+
+			if (theHero.getPillarCount() == 4)
+			{
+				controller.updateView(theHero, "At last, my quest is complete!");
+				TimeUnit.SECONDS.sleep(2);
+				controller.createView();
+				TimeUnit.MILLISECONDS.sleep(500);
+
+				playerWon = true;
+				return;
+			}
+			else
+			{
+				controller.updateView(theHero, "Alas, the door is locked!");
+				TimeUnit.SECONDS.sleep(2);
+				controller.createView();
+				controller.updateView(theHero, 
+						      "Its mechanism must be controlled by the four lost pillars."
+						     );
+				TimeUnit.SECONDS.sleep(2);
+				controller.createView();
+			}
+		}
 
 		if (theRoom.getGraphic("Pit") != null)
 		{

@@ -10,10 +10,19 @@ public class Room
 	private int row;
 	private int column;
 	private boolean pillarDiscovered;
+	private boolean isExit;
 	private ViewController controller;
 	private AttackFactory attacks;
 
-	public Room(Hero theHero, int row, int column, ViewController controller, boolean hasPillar, AttackFactory attacks) throws Exception
+	public Room(Hero theHero, 
+		    int row, 
+		    int column, 
+		    ViewController controller, 
+		    boolean hasPillar,
+		    boolean isEntrance,
+		    boolean isExit, 
+		    AttackFactory attacks
+		   ) throws Exception
 	{
 		graphics = new ArrayList<Drawable>();
 		items = new ArrayList<Item>();
@@ -21,57 +30,72 @@ public class Room
 		double healingPotionChance = Math.random();
 		double visionPotionChance = Math.random();
 		double pitChance = Math.random();
+		this.pillarDiscovered = false;
 
 		this.row = row;
 		this.column = column;
-		this.pillarDiscovered = false;
 		this.controller = controller;
-
-		if (pitChance > .9)
-		{
-			graphics.add(new Pit());
-		}
-		else
-		{
-			graphics.add(new EmptySpace());
-		}
-
-		graphics.add(theHero);
-		graphics.add(new EmptySpace());
-		graphics.add(new EmptySpace());
-		graphics.add(new EmptySpace());
-
-		if (monsterChance > .5)
-		{
-			theMonster = MonsterFactory.createRandomMonster(controller, attacks);
-			graphics.add(theMonster);
-		}
-		else
-		{
-			graphics.add(new EmptySpace());
-		}
-
-		if (hasPillar)
-		{
-			graphics.add(new Pillar());
-		}
-		else
-		{
-			graphics.add(new EmptySpace());
-		}
-
-		graphics.add(new EmptySpace());
-
-		if (healingPotionChance > .9)
-		{
-			items.add(new HealingPotion());
-		}
-
-		if (visionPotionChance > .9)
-		{
-			items.add(new VisionPotion());
-		}
+		this.isExit = isExit;
 		this.attacks = attacks;
+
+                if (isEntrance || isExit)
+		{
+			graphics.add(new EmptySpace());
+			graphics.add(theHero);
+			graphics.add(new EmptySpace());
+			graphics.add(new EmptySpace());
+			graphics.add(new EmptySpace());
+			graphics.add(new EmptySpace());
+			graphics.add(new EmptySpace());
+			graphics.add(new EmptySpace());
+		}
+		else
+		{
+			if (pitChance > .9)
+			{
+				graphics.add(new Pit());
+			}
+			else
+			{
+				graphics.add(new EmptySpace());
+			}
+
+			graphics.add(theHero);
+			graphics.add(new EmptySpace());
+			graphics.add(new EmptySpace());
+			graphics.add(new EmptySpace());
+
+			if (monsterChance > .5)
+			{
+				theMonster = MonsterFactory.createRandomMonster(controller, attacks);
+				graphics.add(theMonster);
+			}
+			else
+			{
+				graphics.add(new EmptySpace());
+			}
+
+			if (hasPillar)
+			{
+				graphics.add(new Pillar());
+			}
+			else
+			{
+				graphics.add(new EmptySpace());
+			}
+
+			graphics.add(new EmptySpace());
+
+			if (healingPotionChance > .9)
+			{
+				items.add(new HealingPotion());
+			}
+
+			if (visionPotionChance > .9)
+			{
+				items.add(new VisionPotion());
+			}
+		}
 	}
 
 	public ArrayList<Drawable> getGraphics()
@@ -90,11 +114,6 @@ public class Room
 		}
 
 		return null;
-	}
-
-	public void addGraphic(Drawable target)
-	{
-		graphics.add(target);
 	}
 
         public void removeMonster()
@@ -140,5 +159,10 @@ public class Room
 	public void discoverPillar()
 	{
 		pillarDiscovered = true;
+	}
+
+	public boolean isExit()
+	{
+		return isExit;
 	}
 }

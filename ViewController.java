@@ -201,7 +201,7 @@ public class ViewController
 	{
 		String buffer = "";
 
-		for (int i = 30 - (action.length() + 1); i > 0; i--) 
+		for (int i = 36 - (action.length() + 1); i > 0; i--) 
 		{
 			buffer += " ";
 		}
@@ -217,7 +217,7 @@ public class ViewController
 	{
 		String buffer = "";
 
-		for (int i = 30 - (Integer.toString(hitPointChange).length() + 1); i > 0; i--) 
+		for (int i = 36 - (Integer.toString(hitPointChange).length() + 1); i > 0; i--) 
 		{
 			buffer += " ";
 		}

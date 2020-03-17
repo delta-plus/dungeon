@@ -27,8 +27,8 @@ public abstract class DungeonCharacter implements Drawable
                                 int height,
 				String type,
                                 File spriteFile,
-								ViewController controller,
-								AttackFactory attacks
+				ViewController controller,
+				AttackFactory attacks
 			       ) throws Exception
 	{
 		this.name = name;
