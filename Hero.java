@@ -20,10 +20,11 @@ public abstract class Hero extends DungeonCharacter
 		    int height,
 		    File sprite,
                     ViewController controller,
-		    String[] actionList
+			String[] actionList,
+			AttackFactory attacks
                    ) throws Exception
 	{
-		super(name, hitPoints, attackSpeed, chanceToHit, damageMin, damageMax, height, "Hero", sprite, controller);
+		super(name, hitPoints, attackSpeed, chanceToHit, damageMin, damageMax, height, "Hero", sprite, controller, attacks);
 		this.chanceToBlock = chanceToBlock;
 		this.actionList = actionList;
 		pillarCount = 0;

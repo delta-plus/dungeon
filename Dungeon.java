@@ -19,6 +19,7 @@ public class Dungeon
 	private static boolean playerQuit = false;
 	private static Scanner keyboard = new Scanner(System.in);
 	private static ViewController controller = new ViewController();
+	private static AttackFactory attacks = new AttackFactory();
 
 	public Dungeon() {}
 
@@ -64,7 +65,7 @@ public class Dungeon
 						}
 					}
 
-					dungeon[i][j] = new Room(theHero, i, j, controller, hasPillar);
+					dungeon[i][j] = new Room(theHero, i, j, controller, hasPillar, attacks);
 					hasPillar = false;
 				}
 			}
@@ -107,7 +108,7 @@ public class Dungeon
 				   "3. Thief");
 		choice = keyboard.nextInt();
 		keyboard.nextLine();
-		return new HeroFactory().createHero(choice, controller);
+		return new HeroFactory().createHero(choice, controller, attacks);
 	}
 
 	public static Monster generateMonster() throws Exception  
@@ -119,13 +120,13 @@ public class Dungeon
 		switch(choice)
 		{
 
-			case 1: return new Ogre(controller);
+			case 1: return new Ogre(controller, attacks);
 
-			case 2: return new Gremlin(controller);
+			case 2: return new Gremlin(controller, attacks);
 
-			case 3: return new Skeleton(controller);
+			case 3: return new Skeleton(controller, attacks);
 
-			default: return new Skeleton(controller);
+			default: return new Skeleton(controller, attacks);
 		}
 	}
 

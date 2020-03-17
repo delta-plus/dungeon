@@ -11,8 +11,9 @@ public class Room
 	private int column;
 	private boolean pillarDiscovered;
 	private ViewController controller;
+	private AttackFactory attacks;
 
-	public Room(Hero theHero, int row, int column, ViewController controller, boolean hasPillar) throws Exception
+	public Room(Hero theHero, int row, int column, ViewController controller, boolean hasPillar, AttackFactory attacks) throws Exception
 	{
 		graphics = new ArrayList<Drawable>();
 		items = new ArrayList<Item>();
@@ -42,7 +43,7 @@ public class Room
 
 		if (monsterChance > .5)
 		{
-			theMonster = MonsterFactory.createRandomMonster(controller);
+			theMonster = MonsterFactory.createRandomMonster(controller, attacks);
 			graphics.add(theMonster);
 		}
 		else
@@ -70,6 +71,7 @@ public class Room
 		{
 			items.add(new VisionPotion());
 		}
+		this.attacks = attacks;
 	}
 
 	public ArrayList<Drawable> getGraphics()

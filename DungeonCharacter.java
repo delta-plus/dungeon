@@ -15,7 +15,8 @@ public abstract class DungeonCharacter implements Drawable
 	private String type;
 	private File spriteFile;
         private Scanner sprite;
-        private ViewController controller;
+		private ViewController controller;
+		private AttackFactory attacks;
 
 	public DungeonCharacter(String name, 
                                 int hitPoints, 
@@ -26,7 +27,8 @@ public abstract class DungeonCharacter implements Drawable
                                 int height,
 				String type,
                                 File spriteFile,
-                                ViewController controller
+								ViewController controller,
+								AttackFactory attacks
 			       ) throws Exception
 	{
 		this.name = name;
@@ -39,7 +41,8 @@ public abstract class DungeonCharacter implements Drawable
 		this.type = type;
 		this.spriteFile = spriteFile;
 		this.sprite = new Scanner(spriteFile);
-                this.controller = controller;
+				this.controller = controller;
+		this.attacks = attacks;
 	}
 
 	public String getName()
@@ -70,6 +73,25 @@ public abstract class DungeonCharacter implements Drawable
 	public Scanner getSprite() 
 	{
 		return sprite;
+	}
+
+	public double getChanceToHit() 
+	{
+		return chanceToHit;
+	}
+
+	public int getDamageMax() 
+	{
+		return damageMax;
+	}
+
+	public int getDamageMin() 
+	{
+		return damageMin;
+	}
+
+	public AttackFactory getAttacks() {
+		return attacks;
 	}
 
 	public void refreshSprite() throws Exception
@@ -107,21 +129,7 @@ public abstract class DungeonCharacter implements Drawable
 
 	public void attack(DungeonCharacter opponent) throws Exception 
 	{
-		boolean canAttack;
-		int damage;
-
-		canAttack = Math.random() <= chanceToHit;
-
-		if (canAttack)
-		{
-			damage = ((int) (Math.random() * (damageMax - damageMin + 1)) + damageMin) * -1;
-			opponent.modifyHitPoints(damage);
-		}
-		else
-		{
-			controller.updateView(opponent, "Miss!");
-                        TimeUnit.SECONDS.sleep(1);
-		}
+		attacks.getBasicAttack().attack(opponent, this);
 	}
 	public void setName(String name)
 	{
