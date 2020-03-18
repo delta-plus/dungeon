@@ -302,7 +302,7 @@ public class Dungeon
 	public void loot() throws Exception
 	{
 		ArrayList<Item> items = theRoom.getItems();
-
+		this.theHero.addItems(items);
 		for (int i = 0; i < items.size(); i++)
 		{
 			controller.updateView(theHero, "Found a " + items.get(i).getName() + "!");
@@ -381,7 +381,20 @@ public class Dungeon
 					theRoom = getRoom(theRoom.getRow(), theRoom.getColumn() + 1);
 				}
 			}
+			else if(direction == 'q'||direction == 'Q')
+			{
+				pauseMenu();
+			}
 		}
+	}
+	public void pauseMenu() throws Exception
+	{
+		boolean paused = true;
+		while(paused==true)
+		{
+			char action = (char) System.in.read();
+		}
+		
 	}
 
 	public void enterRoom() throws Exception
