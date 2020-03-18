@@ -400,8 +400,8 @@ public class Dungeon
 			System.out.println(" Type 2 to use a health Potion");
 			System.out.println("Type q to leave this menu");
 			char action = (char) System.in.read();
-			if(action=='1')this.theHero.useHealthPotion();
-			else if(action=='2')this.theHero.useVisionPotion();
+			if(action=='1')this.theHero.useVisionPotion();
+			else if(action=='2')this.theHero.useHealthPotion();
 			else if(action=='Q'||action=='q')
 			{
 				controller.createView();

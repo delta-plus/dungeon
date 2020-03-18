@@ -122,7 +122,7 @@ public abstract class Hero extends DungeonCharacter
 
 		return 1;
 	}
-	public void useHealthPotion()
+	public void useHealthPotion()throws Exception
 	{
 		if(this.healthPotions>0)
 		{	
