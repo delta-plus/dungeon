@@ -154,32 +154,5 @@ public abstract class Hero extends DungeonCharacter
 		if(item.getName().equals("Vision Potion"))this.visionPotions++;
 		else if(item.getName().equals("Healing Potion"))this.healthPotions++;
 	}
-	public int getHealthPotions()
-	{
-		return this.healthPotions;
-	}
-	public int getVisionPotions()
-	{
-		return this.visionPotions;
-	}
-	public void removeVisionPotions(int VisionPotions)
-	{
-		this.visionPotions = this.visionPotions - VisionPotions;
-		if(this.visionPotions<0)this.visionPotions=0;
-	}
-	public void removeHealthPotions(int healthPotions)
-	{
-		this.healthPotions = this.healthPotions - healthPotions;
-		if(this.healthPotions<0)this.healthPotions=0;
-	}
-	public void removeHealthPotion()
-	{
-		this.healthPotions = this.healthPotions - 1;
-		if(this.healthPotions<0)this.healthPotions=0;
-	}
-	public void removeVisionPotion()
-	{
-		this.visionPotions = this.visionPotions - 1;
-		if(this.visionPotions<0)this.visionPotions=0;
-	}
+	
 }
