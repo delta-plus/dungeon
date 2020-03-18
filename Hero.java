@@ -2,7 +2,7 @@ package dungeon;
 
 import java.io.File;
 import java.util.Scanner;
-
+import java.util.ArrayList;
 public abstract class Hero extends DungeonCharacter
 {
 	private double chanceToBlock;
@@ -138,13 +138,13 @@ public abstract class Hero extends DungeonCharacter
 	{
 		//todo add vision potion
 	}
-	public void addItems(ArrayList<Item> items;)
+	public void addItems(ArrayList<Item> items)
 	{
 		
 		for(int i = 0; i<items.size(); i++)
 		{
-			if(items(i).getName().equals("Vision Potion"))this.visionPotions++;
-			else if(items(i).getName().equals("Healing Potion"))this.healthPotions++;
+			if(items.get(i).getName().equals("Vision Potion"))this.visionPotions++;
+			else if(items.get(i).getName().equals("Healing Potion"))this.healthPotions++;
 		}
 	}
 	public void addItem(Item item)
