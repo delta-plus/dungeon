@@ -134,6 +134,10 @@ public abstract class Hero extends DungeonCharacter
 			System.out.println("Error, player does not have a Health Potion");
 		}
 	}
+	public void useVisionPotion()
+	{
+		//todo add vision potion
+	}
 	public void addItems(ArrayList<Item> items;)
 	{
 		

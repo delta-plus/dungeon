@@ -390,9 +390,23 @@ public class Dungeon
 	public void pauseMenu() throws Exception
 	{
 		boolean paused = true;
+		controller.clearScreen();
 		while(paused==true)
 		{
+			System.out.println(" Hero health is "+this.theHero.getHitPoints());
+			System.out.println(" You have "+theHero.getHealthPotions()+" Health Potions");
+			System.out.println(" You have "+theHero.getVisionPotions()+" Vision Potions");
+			System.out.println(" Type 1 to use a vision Potion");
+			System.out.println(" Type 2 to use a health Potion");
+			System.out.println("Type q to leave this menu");
 			char action = (char) System.in.read();
+			if(action=='1')this.theHero.useHealthPotion();
+			else if(action=='2')this.theHero.useVisionPotion();
+			else if(action=='Q'||action=='q')
+			{
+				controller.createView();
+				return;
+			}
 		}
 		
 	}
