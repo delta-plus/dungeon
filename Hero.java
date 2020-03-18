@@ -54,7 +54,8 @@ public abstract class Hero extends DungeonCharacter
 			if (defend())
 			{
 				getController().updateView(this, "Block!");
-			} else {
+			} else 
+			{
 				super.modifyHitPoints(hitPointChange);
 			}
 		} 
