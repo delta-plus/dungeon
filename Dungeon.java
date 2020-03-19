@@ -400,7 +400,12 @@ public class Dungeon
 			System.out.println(" Type 2 to use a health Potion");
 			System.out.println("Type q to leave this menu");
 			char action = (char) System.in.read();
-			if(action=='1')this.theHero.useVisionPotion();
+			//all 4 rooms sent to vision potion
+			if(action=='1')
+				{
+					this.theHero.useVisionPotion(getRoom(theRoom.getRow() - 1, theRoom.getColumn()),getRoom(theRoom.getRow()-1,theRoom.getColumn()-1),getRoom(theRoom.getRow(), theRoom.getColumn() - 1),getRoom(theRoom.getRow()+1,theRoom.getColumn()-1),getRoom(theRoom.getRow() + 1, theRoom.getColumn()),getRoom(theRoom.getRow()+1,theRoom.getColumn()+1), getRoom(theRoom.getRow(), theRoom.getColumn() + 1),getRoom(theRoom.getRow()-1,theRoom.getColumn()+1));
+					return;
+				}
 			else if(action=='2')this.theHero.useHealthPotion();
 			else if(action=='Q'||action=='q')
 			{

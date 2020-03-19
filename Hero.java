@@ -135,8 +135,60 @@ public abstract class Hero extends DungeonCharacter
 			System.out.println("Error, player does not have a Health Potion");
 		}
 	}
-	public void useVisionPotion()
+	public void useVisionPotion(Room room1,Room room2, Room room3, Room room4, Room room5, Room room6, Room room7, Room room8)
 	{
+		ArrayList<Drawable> graphic1 = room1.getGraphics();
+		ArrayList<Drawable> graphic2 = room2.getGraphics();
+		ArrayList<Drawable> graphic3 = room3.getGraphics();
+		ArrayList<Drawable> graphic4 = room4.getGraphics();
+		ArrayList<Drawable> graphic5 = room5.getGraphics();
+		ArrayList<Drawable> graphic6 = room6.getGraphics();
+		ArrayList<Drawable> graphic7 = room7.getGraphics();
+		ArrayList<Drawable> graphic8 = room8.getGraphics();
+		ViewController controller = super.getController();
+		controller.clearScreen();
+		controller.createView();
+		System.out.println("Behind you is");
+		for(Drawable graphic: graphic1)
+		{	
+			System.out.println(graphic.getType());
+		}
+			System.out.println("To the bottom left corner is");
+		for(Drawable graphic: graphic2)
+		{	
+			System.out.println(graphic.getType());
+		}
+			System.out.println("To the left is");
+		for(Drawable graphic: graphic3)
+		{	
+			System.out.println(graphic.getType());
+		}
+			System.out.println("In the top left corner is");
+		for(Drawable graphic: graphic4)
+		{	
+			System.out.println(graphic.getType());
+		}
+			System.out.println("In front of you is");
+		for(Drawable graphic: graphic5)
+		{	
+			System.out.println(graphic.getType());
+		}
+			System.out.println("In the top right corner is");
+		for(Drawable graphic: graphic6)
+		{	
+			System.out.println(graphic.getType());
+		}
+			System.out.println("To the right is");
+		for(Drawable graphic: graphic7)
+		{	
+			System.out.println(graphic.getType());
+		}
+			System.out.println("In the bottom right corner is");
+		for(Drawable graphic: graphic8)
+		{	
+			System.out.println(graphic.getType());
+		}
+		this.visionPotions--;
 		//todo add vision potion
 	}
 	public void addItems(ArrayList<Item> items)
