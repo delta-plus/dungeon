@@ -75,7 +75,7 @@ public class ViewController
 					   "HP: " + Integer.toString(theHero.getHitPoints()) + 
 					   "                  " + 
 					   "HP: " + Integer.toString(theMonster.getHitPoints()));
-			System.out.println("      Turns: " + theHero.getTurns());
+			System.out.println("       Turns: " + theHero.getTurns());
 			System.out.println();
 
 			for (String choice : theHero.getActionList()) 
