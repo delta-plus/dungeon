@@ -161,6 +161,12 @@ public class Dungeon
 	{
 		int choice;
 
+		System.out.println("Use abilities with number keys.\n" + 
+				   "Navigate to the next room with w, a, s, and d.\n" +
+				   "When not in combat, you can access items with \"q\".\n" +
+				   "Find all four pillars of OO and get to the exit to win.\n" +
+				   "Good luck!\n");
+
 		System.out.println("Choose a hero:\n" +
 				   "1. Warrior\n" +
 				   "2. Sorceress\n" +
