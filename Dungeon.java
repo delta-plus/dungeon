@@ -409,7 +409,11 @@ public class Dungeon
 			//all 4 rooms sent to vision potion
 			if(action=='1')
 				{
-					this.theHero.useVisionPotion(getRoom(theRoom.getRow() - 1, theRoom.getColumn()),getRoom(theRoom.getRow()-1,theRoom.getColumn()-1),getRoom(theRoom.getRow(), theRoom.getColumn() - 1),getRoom(theRoom.getRow()+1,theRoom.getColumn()-1),getRoom(theRoom.getRow() + 1, theRoom.getColumn()),getRoom(theRoom.getRow()+1,theRoom.getColumn()+1), getRoom(theRoom.getRow(), theRoom.getColumn() + 1),getRoom(theRoom.getRow()-1,theRoom.getColumn()+1));
+					if(this.theRoom.getColumn()<4&&this.theRoom.getColumn()>0&&this.theRoom.getRow()<4&&this.theRoom.getRow()>0)
+					{
+						this.theHero.useVisionPotion(getRoom(theRoom.getRow() - 1, theRoom.getColumn()),getRoom(theRoom.getRow()-1,theRoom.getColumn()-1),getRoom(theRoom.getRow(), theRoom.getColumn() - 1),getRoom(theRoom.getRow()+1,theRoom.getColumn()-1),getRoom(theRoom.getRow() + 1, theRoom.getColumn()),getRoom(theRoom.getRow()+1,theRoom.getColumn()+1), getRoom(theRoom.getRow(), theRoom.getColumn() + 1),getRoom(theRoom.getRow()-1,theRoom.getColumn()+1));
+					}
+					
 					return;
 				}
 			else if(action=='2')this.theHero.useHealthPotion();
