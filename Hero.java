@@ -135,7 +135,7 @@ public abstract class Hero extends DungeonCharacter
 			System.out.println("Error, player does not have a Health Potion");
 		}
 	}
-	public void useVisionPotion(Room room1,Room room2, Room room3, Room room4, Room room5, Room room6, Room room7, Room room8) throws Exception
+	public void useVisionPotion(Room room1,Room room2, Room room3, Room room4, Room room5, Room room6, Room room7, Room room8)
 	{
 		ArrayList<Drawable> graphic1 = room1.getGraphics();
 		ArrayList<Drawable> graphic2 = room2.getGraphics();
