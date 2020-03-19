@@ -151,7 +151,7 @@ public abstract class Hero extends DungeonCharacter
 		System.out.println("Behind you is");
 		for(Drawable graphic: graphic1)
 		{	
-			if(graphic.getType()!="Empty Space")
+			if(graphic.getType()!="Empty Space"&&graphic.getType()!="Hero")
 			{
 				System.out.println(graphic.getType());
 			}
@@ -159,7 +159,7 @@ public abstract class Hero extends DungeonCharacter
 			System.out.println("To the bottom left corner is");
 		for(Drawable graphic: graphic2)
 		{	
-			if(graphic.getType()!="Empty Space")
+			if(graphic.getType()!="Empty Space"&&graphic.getType()!="Hero")
 			{
 				System.out.println(graphic.getType());
 			}
@@ -167,7 +167,7 @@ public abstract class Hero extends DungeonCharacter
 			System.out.println("To the left is");
 		for(Drawable graphic: graphic3)
 		{	
-			if(graphic.getType()!="Empty Space")
+			if(graphic.getType()!="Empty Space"&&graphic.getType()!="Hero")
 			{
 				System.out.println(graphic.getType());
 			}
@@ -175,7 +175,7 @@ public abstract class Hero extends DungeonCharacter
 			System.out.println("In the top left corner is");
 		for(Drawable graphic: graphic4)
 		{	
-			if(graphic.getType()!="Empty Space")
+			if(graphic.getType()!="Empty Space"&&graphic.getType()!="Hero")
 			{
 				System.out.println(graphic.getType());
 			}
@@ -183,7 +183,7 @@ public abstract class Hero extends DungeonCharacter
 			System.out.println("In front of you is");
 		for(Drawable graphic: graphic5)
 		{	
-			if(graphic.getType()!="Empty Space")
+			if(graphic.getType()!="Empty Space"&&graphic.getType()!="Hero")
 			{
 				System.out.println(graphic.getType());
 			}
@@ -191,7 +191,7 @@ public abstract class Hero extends DungeonCharacter
 			System.out.println("In the top right corner is");
 		for(Drawable graphic: graphic6)
 		{	
-			if(graphic.getType()!="Empty Space")
+			if(graphic.getType()!="Empty Space"&&graphic.getType()!="Hero")
 			{
 				System.out.println(graphic.getType());
 			}
@@ -199,14 +199,14 @@ public abstract class Hero extends DungeonCharacter
 			System.out.println("To the right is");
 		for(Drawable graphic: graphic7)
 		{	
-			if(graphic.getType()!="Empty Space")
+			if(graphic.getType()!="Empty Space"&&graphic.getType()!="Hero")
 			{
 				System.out.println(graphic.getType());
 			}
 		}
 			System.out.println("In the bottom right corner is");
 		for(Drawable graphic: graphic8)
-		{	if(graphic.getType()!="Empty Space")
+		{	if(graphic.getType()!="Empty Space"&&graphic.getType()!="Hero")
 			{
 				System.out.println(graphic.getType());
 			}
